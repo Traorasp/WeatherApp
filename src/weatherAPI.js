@@ -1,9 +1,12 @@
+import changeDOM from './changeDOM';
+
 const weatherAPI = () => {
   const retrieveData = async (e) => {
     const location = e.target.value;
     const url = `http://api.openweathermap.org/data/2.5/weather?q=${location}&APPID=2057e59161ea687b444b683c4710b74e`;
     const data = await fetch(url, { mode: 'cors' });
-    return data.json();
+    const weather = await data.json();
+    changeDOM.update(weather);
   };
 
   const inputBar = document.querySelector('input');
