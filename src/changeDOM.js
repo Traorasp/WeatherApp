@@ -1,6 +1,19 @@
+import d01 from './images/01d.png';
+import n01 from './images/01n.png';
+import d02 from './images/02d.png';
+import n02 from './images/02n.png';
+import d03 from './images/03.png';
+import d04 from './images/04.png';
+import d09 from './images/09.png';
+import d10 from './images/10d.png';
+import n10 from './images/10n.png';
+import d11 from './images/11d.png';
+import n11 from './images/11n.png';
+import d13 from './images/13.png';
+import d50 from './images/50.png';
+
 const changeDOM = (() => {
   const body = document.querySelector('body');
-
   const weatherMain = document.createElement('div');
   weatherMain.setAttribute('id', 'main');
   body.appendChild(weatherMain);
@@ -52,6 +65,60 @@ const changeDOM = (() => {
   const tempUnits = unit === 'Imperial' ? '\u00B0F' : '\u00B0C';
   const speedUnits = unit === 'Imperial' ? 'mph' : 'mps';
 
+  const findIcon = (icon) => {
+    let url;
+    switch (icon) {
+      case '01d':
+        url = d01;
+        break;
+      case '01n':
+        url = n01;
+        break;
+      case '02d':
+        url = d02;
+        break;
+      case '02n':
+        url = n02;
+        break;
+      case '03d':
+      case '03n':
+        url = d03;
+        break;
+      case '04d':
+      case '04n':
+        url = d04;
+        break;
+      case '09d':
+      case '09n':
+        url = d09;
+        break;
+      case '10d':
+        url = d10;
+        break;
+      case '10n':
+        url = n10;
+        break;
+      case '11d':
+        url = d11;
+        break;
+      case '11n':
+        url = n11;
+        break;
+      case '13d':
+      case '13n':
+        url = d13;
+        break;
+      case '50d':
+      case '50n':
+        url = d50;
+        break;
+      default:
+        console.log('error');
+        break;
+    }
+    return url;
+  };
+
   const displayCurrInfo = (info) => {
     if (searchBar.value !== '') {
       cityName.textContent = searchBar.value.substring(0, 1).toUpperCase()
@@ -99,6 +166,10 @@ const changeDOM = (() => {
       weekDay.textContent = (new Date(day.dt * 1000)).toLocaleString('en-US', { weekday: 'long' });
       dayContent.appendChild(weekDay);
 
+      const icon = document.createElement('img');
+      icon.src = findIcon(day.weather[0].icon);
+      dayContent.appendChild(icon);
+
       const dayMain = document.createElement('h3');
       dayMain.textContent = day.weather[0].main;
       dayContent.appendChild(dayMain);
@@ -128,6 +199,10 @@ const changeDOM = (() => {
       const hourTime = document.createElement('h2');
       hourTime.textContent = (new Date(hour.dt * 1000)).toLocaleString('en-US', { hour: 'numeric' });
       hourContent.appendChild(hourTime);
+
+      const icon = document.createElement('img');
+      icon.src = findIcon(hour.weather[0].icon);
+      hourContent.appendChild(icon);
 
       const hourMain = document.createElement('h3');
       hourMain.textContent = hour.weather[0].main;
