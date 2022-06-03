@@ -60,38 +60,56 @@ const changeDOM = (() => {
     const Desc = document.createElement('h2');
     Desc.textContent = info.weather[0].description.substring(0, 1).toUpperCase()
     + info.weather[0].description.substring(1);
-    Desc.classList.add('info');
     weatherMain.appendChild(Desc);
 
     const Temp = document.createElement('h2');
     Temp.textContent = info.temp + tempUnits;
-    Temp.classList.add('info');
     weatherMain.appendChild(Temp);
 
     const feelsLike = document.createElement('h3');
     feelsLike.textContent = info.feels_like + tempUnits;
-    feelsLike.classList.add('info');
     weatherMain.appendChild(feelsLike);
 
     const cloudiness = document.createElement('h3');
     cloudiness.textContent = `Clouds: ${info.clouds}%`;
-    cloudiness.classList.add('info');
     weatherMain.appendChild(cloudiness);
 
     const humidity = document.createElement('h3');
     humidity.textContent = `Humidity: ${info.humidity}%`;
-    humidity.classList.add('info');
     weatherMain.appendChild(humidity);
 
     const windSpeed = document.createElement('h3');
     windSpeed.textContent = `Wind: ${info.wind_speed}${speedUnits}`;
-    windSpeed.classList.add('info');
     weatherMain.appendChild(windSpeed);
   };
 
   const displayWeekInfo = (info) => {
-    for (let day = 0; day < 7; day += 1) {
+    for (let i = 0; i <= 7; i += 1) {
+      const day = info[i];
 
+      const dayContent = document.createElement('div');
+      dayContent.classList.add('day-content');
+      weatherWeek.appendChild(dayContent);
+
+      const weekDay = document.createElement('h2');
+      weekDay.textContent = (new Date(day.dt * 1000)).toLocaleString('en-US', { weekday: 'long' });
+      dayContent.appendChild(weekDay);
+
+      const dayMain = document.createElement('h3');
+      dayMain.textContent = day.weather[0].main;
+      dayContent.appendChild(dayMain);
+
+      const dayTemp = document.createElement('div');
+      dayTemp.classList.add('day-temp');
+      dayContent.appendChild(dayTemp);
+
+      const minTemp = document.createElement('h3');
+      minTemp.textContent = day.temp.min;
+      dayTemp.appendChild(minTemp);
+
+      const maxTemp = document.createElement('h3');
+      maxTemp.textContent = day.temp.max;
+      dayTemp.appendChild(maxTemp);
     }
   };
 

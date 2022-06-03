@@ -17,4 +17,30 @@ body {
 
 #extra {
     grid-area: 3 / 1 / 4 / 4;
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    align-items: space-evenly;
+}
+
+.week {
+    grid-row: 1 / 2;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.day-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.day-temp {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 25%;
+}
+
+.hours {
+    grid-row: 2 / 3;
 }
