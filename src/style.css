@@ -12,6 +12,10 @@ body {
     justify-content: center;
 }
 
+body.dark {
+    color: white;
+}
+
 .city {
     grid-area: 1 / 2 / 2 / 3;
     text-align: center;

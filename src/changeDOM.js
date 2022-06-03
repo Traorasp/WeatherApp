@@ -1,16 +1,31 @@
-import d01 from './images/01d.png';
-import n01 from './images/01n.png';
-import d02 from './images/02d.png';
-import n02 from './images/02n.png';
-import d03 from './images/03.png';
-import d04 from './images/04.png';
-import d09 from './images/09.png';
-import d10 from './images/10d.png';
-import n10 from './images/10n.png';
-import d11 from './images/11d.png';
-import n11 from './images/11n.png';
-import d13 from './images/13.png';
-import d50 from './images/50.png';
+import d01 from './images/icons/01d.png';
+import n01 from './images/icons/01n.png';
+import d02 from './images/icons/02d.png';
+import n02 from './images/icons/02n.png';
+import d03 from './images/icons/03.png';
+import d04 from './images/icons/04.png';
+import d09 from './images/icons/09.png';
+import d10 from './images/icons/10d.png';
+import n10 from './images/icons/10n.png';
+import d11 from './images/icons/11d.png';
+import n11 from './images/icons/11n.png';
+import d13 from './images/icons/13.png';
+import d50 from './images/icons/50.png';
+
+import brokenClouds from './images/background/brokenClouds.jpg';
+import clearDay from './images/background/clearDay.jpg';
+import clearNight from './images/background/clearNight.jpg';
+import fewCloudsDay from './images/background/fewCloudsDay.jpg';
+import fewCloudsNight from './images/background/fewCloudsNight.jpg';
+import mistDay from './images/background/mistDay.jpg';
+import mistNight from './images/background/mistNight.jpg';
+import scatteredCloudsDay from './images/background/scatteredCloudsDay.jpg';
+import scatteredCloudsNight from './images/background/scatteredCloudsNight.jpg';
+import showerRainDay from './images/background/showerRainDay.jpg';
+import showerRainNight from './images/background/showerRainNight.jpg';
+import snowDay from './images/background/snowDay.jpg';
+import snowNight from './images/background/snowNight.jpg';
+import thunderStorm from './images/background/thunderStorm.jpg';
 
 const changeDOM = (() => {
   const body = document.querySelector('body');
@@ -119,7 +134,71 @@ const changeDOM = (() => {
   };
 
   const setBackgroundImage = (weather) => {
-
+    let url;
+    body.classList.remove('dark');
+    switch (weather) {
+      case '01d':
+        url = clearDay;
+        break;
+      case '01n':
+        url = clearNight;
+        body.classList.add('dark');
+        break;
+      case '02d':
+        url = fewCloudsDay;
+        break;
+      case '02n':
+        url = fewCloudsNight;
+        body.classList.add('dark');
+        break;
+      case '03d':
+        url = scatteredCloudsDay;
+        body.classList.add('dark');
+        break;
+      case '03n':
+        url = scatteredCloudsNight;
+        body.classList.add('dark');
+        break;
+      case '04d':
+      case '04n':
+        url = brokenClouds;
+        break;
+      case '09d':
+      case '10d':
+        url = showerRainDay;
+        body.classList.add('dark');
+        break;
+      case '09n':
+      case '10n':
+        url = showerRainNight;
+        body.classList.add('dark');
+        break;
+      case '11d':
+      case '11n':
+        url = thunderStorm;
+        body.classList.add('dark');
+        break;
+      case '13d':
+        url = snowDay;
+        break;
+      case '13n':
+        url = snowNight;
+        body.classList.add('dark');
+        break;
+      case '50d':
+        url = mistDay;
+        break;
+      case '50n':
+        url = mistNight;
+        body.classList.add('dark');
+        break;
+      default:
+        url = clearDay;
+        break;
+    }
+    body.style.backgroundImage = `url('${url}')`;
+    body.style.backgroundRepeat = 'no-repeat';
+    body.style.backgroundSize = 'cover';
   };
 
   const displayCurrInfo = (info) => {
@@ -131,8 +210,8 @@ const changeDOM = (() => {
     }
     searchBar.value = '';
 
-    setBackgroundImage();
-
+    setBackgroundImage('50d');
+    // setBackgroundImage(info.weather[0].icon);
     const Desc = document.createElement('h3');
     Desc.textContent = info.weather[0].description.substring(0, 1).toUpperCase()
     + info.weather[0].description.substring(1);
@@ -213,7 +292,7 @@ const changeDOM = (() => {
       hourMain.textContent = hour.weather[0].main;
       hourContent.appendChild(hourMain);
 
-      const hourTemp = document.createElement('div');
+      const hourTemp = document.createElement('h3');
       hourTemp.textContent = hour.temp + tempUnits;
       hourContent.appendChild(hourTemp);
     }
