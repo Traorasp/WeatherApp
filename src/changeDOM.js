@@ -48,7 +48,6 @@ const changeDOM = (() => {
   const speedUnits = unit === 'Imperial' ? 'mph' : 'mps';
 
   const displayCurrInfo = (info) => {
-    weatherMain.innerHTML = '';
     if (searchBar.value !== '') {
       cityName.textContent = searchBar.value.substring(0, 1).toUpperCase()
         + searchBar.value.substring(1);
@@ -104,20 +103,41 @@ const changeDOM = (() => {
       dayContent.appendChild(dayTemp);
 
       const minTemp = document.createElement('h3');
-      minTemp.textContent = day.temp.min;
+      minTemp.textContent = day.temp.min + tempUnits;
       dayTemp.appendChild(minTemp);
 
       const maxTemp = document.createElement('h3');
-      maxTemp.textContent = day.temp.max;
+      maxTemp.textContent = day.temp.max + tempUnits;
       dayTemp.appendChild(maxTemp);
     }
   };
 
   const displayHourInfo = (info) => {
+    for (let i = 0; i <= 24; i += 1) {
+      const hour = info[i];
 
+      const hourContent = document.createElement('div');
+      hourContent.classList.add('hour-content');
+      weather24Hours.appendChild(hourContent);
+
+      const hourTime = document.createElement('h2');
+      hourTime.textContent = (new Date(hour.dt * 1000)).toLocaleString('en-US', { hour: 'numeric' });
+      hourContent.appendChild(hourTime);
+
+      const hourMain = document.createElement('h3');
+      hourMain.textContent = hour.weather[0].main;
+      hourContent.appendChild(hourMain);
+
+      const hourTemp = document.createElement('div');
+      hourTemp.textContent = hour.temp + tempUnits;
+      hourContent.appendChild(hourTemp);
+    }
   };
 
   const update = (weather) => {
+    weatherMain.innerHTML = '';
+    weatherWeek.innerHTML = '';
+    weather24Hours.innerHTML = '';
     displayCurrInfo(weather.current);
     displayWeekInfo(weather.daily);
     displayHourInfo(weather.hourly);

@@ -1,18 +1,25 @@
 body {
     display: grid;
-    grid-template: 1fr 0.1fr 1fr / repeat(3, 1fr);
+    grid-template: 0.8fr 0.1fr 1fr / repeat(3, 1fr);
     width: 100vw;
     height: 100vh;
     margin: 0;
     padding: 0;
+    align-items: center;
+    justify-content: center;
 }
 
 #main {
     grid-area: 1 / 2 / 2 / 3;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
 }
 
 #utility {
     grid-area: 2 / 2 / 3 /3;
+    justify-self: center;
 }
 
 #extra {
@@ -20,27 +27,46 @@ body {
     display: grid;
     grid-template-rows: repeat(2, 1fr);
     align-items: space-evenly;
+    justify-content: center;
+}
+
+.week, .hours {
+    display: flex;
+    max-width: 90vw;
+    overflow: auto;
+
 }
 
 .week {
     grid-row: 1 / 2;
-    display: flex;
     justify-content: space-evenly;
+    column-gap: 1%;
 }
 
-.day-content {
+.day-content, .hour-content {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
+.day-content {
+    width: 200px;
+    margin: 2%;
+}
+
 .day-temp {
     display: flex;
     justify-content: space-evenly;
-    gap: 25%;
+    column-gap: 10%;
 }
 
 .hours {
     grid-row: 2 / 3;
+    column-gap: 1%;
+}
+
+.hour-content {
+    width: 100px;
+    margin: 2%;
 }
