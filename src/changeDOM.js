@@ -118,6 +118,10 @@ const changeDOM = (() => {
     return url;
   };
 
+  const setBackgroundImage = (weather) => {
+
+  };
+
   const displayCurrInfo = (info) => {
     if (searchBar.value !== '') {
       cityName.textContent = searchBar.value.substring(0, 1).toUpperCase()
@@ -126,6 +130,8 @@ const changeDOM = (() => {
       cityName.textContent = 'London';
     }
     searchBar.value = '';
+
+    setBackgroundImage();
 
     const Desc = document.createElement('h3');
     Desc.textContent = info.weather[0].description.substring(0, 1).toUpperCase()

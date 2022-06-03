@@ -1,4 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 body {
+    font-family: 'Roboto', sans-serif;
     display: grid;
     grid-template: 0.2fr 0.4fr 0.1fr 1fr / 0.5fr 1fr 0.5fr;
     max-width: 100vw;
