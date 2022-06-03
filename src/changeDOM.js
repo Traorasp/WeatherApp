@@ -13,6 +13,11 @@ const changeDOM = (() => {
   utility.setAttribute('id', 'utility');
   body.appendChild(utility);
 
+  const barLabel = document.createElement('label');
+  barLabel.setAttribute('for', 'search');
+  barLabel.textContent = 'City:';
+  utility.appendChild(barLabel);
+
   const searchBar = document.createElement('input');
   searchBar.setAttribute('type', 'search');
   searchBar.setAttribute('id', 'search');
@@ -56,22 +61,22 @@ const changeDOM = (() => {
     }
     searchBar.value = '';
 
-    const Desc = document.createElement('h2');
+    const Desc = document.createElement('h3');
     Desc.textContent = info.weather[0].description.substring(0, 1).toUpperCase()
     + info.weather[0].description.substring(1);
     weatherMain.appendChild(Desc);
 
-    const Temp = document.createElement('h2');
-    Temp.textContent = info.temp + tempUnits;
-    weatherMain.appendChild(Temp);
-
-    const feelsLike = document.createElement('h3');
-    feelsLike.textContent = info.feels_like + tempUnits;
-    weatherMain.appendChild(feelsLike);
-
     const cloudiness = document.createElement('h3');
     cloudiness.textContent = `Clouds: ${info.clouds}%`;
     weatherMain.appendChild(cloudiness);
+
+    const Temp = document.createElement('h3');
+    Temp.textContent = `Temp: ${info.temp}${tempUnits}`;
+    weatherMain.appendChild(Temp);
+
+    const feelsLike = document.createElement('h3');
+    feelsLike.textContent = `Feels: ${info.feels_like}${tempUnits}`;
+    weatherMain.appendChild(feelsLike);
 
     const humidity = document.createElement('h3');
     humidity.textContent = `Humidity: ${info.humidity}%`;
