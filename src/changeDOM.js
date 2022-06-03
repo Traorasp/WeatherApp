@@ -6,6 +6,18 @@ const changeDOM = (() => {
   searchBar.setAttribute('id', 'search');
   body.appendChild(searchBar);
 
+  const unitSelector = document.createElement('select');
+  unitSelector.classList.add('units');
+  body.appendChild(unitSelector);
+  const imperial = document.createElement('option');
+  imperial.textContent = 'Imperial';
+  imperial.value = 'Imperial';
+  unitSelector.appendChild(imperial);
+  const metric = document.createElement('option');
+  metric.textContent = 'Metric';
+  metric.value = 'Metric';
+  unitSelector.appendChild(metric);
+
   const cityName = document.createElement('h1');
   cityName.classList.add('city');
   body.appendChild(cityName);
@@ -18,13 +30,22 @@ const changeDOM = (() => {
   weatherExtra.classList.add('extra');
   body.appendChild(weatherExtra);
 
-  const displayCurrInfo = (info) => {
-    cityName.textContent = searchBar.value;
+  const unit = document.querySelector('.units').value;
+  const tempUnits = unit === 'Imperial' ? '\u00B0F' : '\u00B0C';
+  const speedUnits = unit === 'Imperial' ? 'mph' : 'mps';
 
-    const tempUnits = '\u00B0C';
+  const displayCurrInfo = (info) => {
+    weatherExtra.innerHTML = '';
+    weatherMain.innerHTML = '';
+    if (searchBar.value !== '') {
+      cityName.textContent = searchBar.value.substring(0, 1).toUpperCase()
+        + searchBar.value.substring(1);
+    }
+    searchBar.value = '';
 
     const Desc = document.createElement('h2');
-    Desc.textContent = info.weather[0].description;
+    Desc.textContent = info.weather[0].description.substring(0, 1).toUpperCase()
+    + info.weather[0].description.substring(1);
     Desc.classList.add('info');
     weatherMain.appendChild(Desc);
 
@@ -45,12 +66,17 @@ const changeDOM = (() => {
     */
 
     const feelsLike = document.createElement('h3');
-    feelsLike.textContent = info.feels_like;
+    feelsLike.textContent = info.feels_like + tempUnits;
     feelsLike.classList.add('info');
     weatherExtra.appendChild(feelsLike);
 
+    const cloudiness = document.createElement('h3');
+    cloudiness.textContent = `${info.clouds}%`;
+    cloudiness.classList.add('info');
+    weatherExtra.appendChild(cloudiness);
+
     const pressure = document.createElement('h3');
-    pressure.textContent = info.pressure;
+    pressure.textContent = `${info.pressure}hPa`;
     pressure.classList.add('info');
     weatherExtra.appendChild(pressure);
 
@@ -60,7 +86,7 @@ const changeDOM = (() => {
     weatherExtra.appendChild(humidity);
 
     const windSpeed = document.createElement('h3');
-    windSpeed.textContent = info.wind_speed;
+    windSpeed.textContent = info.wind_speed + speedUnits;
     windSpeed.classList.add('info');
     weatherExtra.appendChild(windSpeed);
   };

@@ -1,14 +1,19 @@
 import changeDOM from './changeDOM';
 
 const weatherAPI = () => {
-  const retrieveData = async (e) => {
-    const location = e.target.value;
+  const retrieveData = async () => {
+    let location = document.querySelector('input').value;
+    if (location === '') {
+      location = document.querySelector('.city').textContent;
+    }
+
     const url = `http://api.openweathermap.org/data/2.5/weather?q=${location}&APPID=2057e59161ea687b444b683c4710b74e`;
     const data = await fetch(url, { mode: 'cors' });
     const weather = await data.json();
     const { lat } = weather.coord;
     const { lon } = weather.coord;
-    const units = 'imperial';
+    const measurements = document.querySelector('.units').value;
+    const units = measurements === 'Imperial' ? 'imperial' : 'metric';
     const testurl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=${units}&exclude=minutely&appid=2057e59161ea687b444b683c4710b74e`;
     const forecast = await fetch(testurl, { mode: 'cors' });
     changeDOM.update(await forecast.json());
@@ -16,6 +21,9 @@ const weatherAPI = () => {
 
   const inputBar = document.querySelector('input');
   inputBar.addEventListener('change', retrieveData);
+
+  const unitSelector = document.querySelector('.units');
+  unitSelector.addEventListener('change', retrieveData);
 
   return {
 
