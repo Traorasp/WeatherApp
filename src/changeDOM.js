@@ -7,7 +7,7 @@ const changeDOM = (() => {
 
   const cityName = document.createElement('h1');
   cityName.classList.add('city');
-  weatherMain.appendChild(cityName);
+  body.appendChild(cityName);
 
   const utility = document.createElement('div');
   utility.setAttribute('id', 'utility');
@@ -50,7 +50,7 @@ const changeDOM = (() => {
   const displayCurrInfo = (info) => {
     if (searchBar.value !== '') {
       cityName.textContent = searchBar.value.substring(0, 1).toUpperCase()
-        + searchBar.value.substring(1);
+      + searchBar.value.substring(1);
     } else if (cityName.textContent === '') {
       cityName.textContent = 'London';
     }

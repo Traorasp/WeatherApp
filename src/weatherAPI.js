@@ -23,7 +23,7 @@ const weatherAPI = (() => {
   };
 
   const initialLoad = () => {
-    retrieveData('london');
+    retrieveData('London');
   };
 
   initialLoad();
