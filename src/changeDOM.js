@@ -1,14 +1,27 @@
 const changeDOM = (() => {
   const body = document.querySelector('body');
 
+  const weatherMain = document.createElement('div');
+  weatherMain.setAttribute('id', 'main');
+  body.appendChild(weatherMain);
+
+  const cityName = document.createElement('h1');
+  cityName.classList.add('city');
+  weatherMain.appendChild(cityName);
+
+  const utility = document.createElement('div');
+  utility.setAttribute('id', 'utility');
+  body.appendChild(utility);
+
   const searchBar = document.createElement('input');
   searchBar.setAttribute('type', 'search');
   searchBar.setAttribute('id', 'search');
-  body.appendChild(searchBar);
+  utility.appendChild(searchBar);
 
   const unitSelector = document.createElement('select');
   unitSelector.classList.add('units');
-  body.appendChild(unitSelector);
+  utility.appendChild(unitSelector);
+
   const imperial = document.createElement('option');
   imperial.textContent = 'Imperial';
   imperial.value = 'Imperial';
@@ -18,24 +31,23 @@ const changeDOM = (() => {
   metric.value = 'Metric';
   unitSelector.appendChild(metric);
 
-  const cityName = document.createElement('h1');
-  cityName.classList.add('city');
-  body.appendChild(cityName);
-
-  const weatherMain = document.createElement('div');
-  weatherMain.classList.add('main');
-  body.appendChild(weatherMain);
-
   const weatherExtra = document.createElement('div');
-  weatherExtra.classList.add('extra');
+  weatherExtra.setAttribute('id', 'extra');
   body.appendChild(weatherExtra);
+
+  const weatherWeek = document.createElement('div');
+  weatherWeek.classList.add('week');
+  weatherExtra.appendChild(weatherWeek);
+
+  const weather24Hours = document.createElement('div');
+  weather24Hours.classList.add('hours');
+  weatherExtra.appendChild(weather24Hours);
 
   const unit = document.querySelector('.units').value;
   const tempUnits = unit === 'Imperial' ? '\u00B0F' : '\u00B0C';
   const speedUnits = unit === 'Imperial' ? 'mph' : 'mps';
 
   const displayCurrInfo = (info) => {
-    weatherExtra.innerHTML = '';
     weatherMain.innerHTML = '';
     if (searchBar.value !== '') {
       cityName.textContent = searchBar.value.substring(0, 1).toUpperCase()
@@ -56,45 +68,41 @@ const changeDOM = (() => {
     Temp.classList.add('info');
     weatherMain.appendChild(Temp);
 
-    /* const maxTemp = document.createElement('h3');
-    maxTemp.textContent = info.main.temp_max;
-    maxTemp.classList.add('info');
-    weatherMain.appendChild(maxTemp);
-
-    const minTemp = document.createElement('h3');
-    minTemp.textContent = info.main.temp_min;
-    minTemp.classList.add('info');
-    weatherMain.appendChild(minTemp);
-    */
-
     const feelsLike = document.createElement('h3');
     feelsLike.textContent = info.feels_like + tempUnits;
     feelsLike.classList.add('info');
-    weatherExtra.appendChild(feelsLike);
+    weatherMain.appendChild(feelsLike);
 
     const cloudiness = document.createElement('h3');
-    cloudiness.textContent = `${info.clouds}%`;
+    cloudiness.textContent = `Clouds: ${info.clouds}%`;
     cloudiness.classList.add('info');
-    weatherExtra.appendChild(cloudiness);
-
-    const pressure = document.createElement('h3');
-    pressure.textContent = `${info.pressure}hPa`;
-    pressure.classList.add('info');
-    weatherExtra.appendChild(pressure);
+    weatherMain.appendChild(cloudiness);
 
     const humidity = document.createElement('h3');
-    humidity.textContent = `${info.humidity}%`;
+    humidity.textContent = `Humidity: ${info.humidity}%`;
     humidity.classList.add('info');
-    weatherExtra.appendChild(humidity);
+    weatherMain.appendChild(humidity);
 
     const windSpeed = document.createElement('h3');
-    windSpeed.textContent = info.wind_speed + speedUnits;
+    windSpeed.textContent = `Wind: ${info.wind_speed}${speedUnits}`;
     windSpeed.classList.add('info');
-    weatherExtra.appendChild(windSpeed);
+    weatherMain.appendChild(windSpeed);
+  };
+
+  const displayWeekInfo = (info) => {
+    for (let day = 0; day < 7; day += 1) {
+
+    }
+  };
+
+  const displayHourInfo = (info) => {
+
   };
 
   const update = (weather) => {
     displayCurrInfo(weather.current);
+    displayWeekInfo(weather.daily);
+    displayHourInfo(weather.hourly);
   };
 
   return {
