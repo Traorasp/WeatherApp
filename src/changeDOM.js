@@ -49,6 +49,9 @@ const changeDOM = (() => {
   metric.value = 'Metric';
   unitSelector.appendChild(metric);
 
+  let tempUnits = '\u00B0F';
+  let speedUnits = 'mph';
+
   const weatherExtra = document.createElement('div');
   weatherExtra.setAttribute('id', 'extra');
   body.appendChild(weatherExtra);
@@ -60,10 +63,6 @@ const changeDOM = (() => {
   const weather24Hours = document.createElement('div');
   weather24Hours.classList.add('hours');
   weatherExtra.appendChild(weather24Hours);
-
-  const unit = document.querySelector('.units').value;
-  const tempUnits = unit === 'Imperial' ? '\u00B0F' : '\u00B0C';
-  const speedUnits = unit === 'Imperial' ? 'mph' : 'mps';
 
   const findIcon = (icon) => {
     let url;
@@ -214,10 +213,16 @@ const changeDOM = (() => {
     }
   };
 
-  const update = (weather) => {
+  const reset = () => {
+    tempUnits = unitSelector.value === 'Imperial' ? '\u00B0F' : '\u00B0C';
+    speedUnits = unitSelector.value === 'Imperial' ? 'mph' : 'mps';
     weatherMain.innerHTML = '';
     weatherWeek.innerHTML = '';
     weather24Hours.innerHTML = '';
+  };
+
+  const update = (weather) => {
+    reset();
     displayCurrInfo(weather.current);
     displayWeekInfo(weather.daily);
     displayHourInfo(weather.hourly);
