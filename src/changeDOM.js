@@ -40,6 +40,8 @@ const changeDOM = (() => {
     if (searchBar.value !== '') {
       cityName.textContent = searchBar.value.substring(0, 1).toUpperCase()
         + searchBar.value.substring(1);
+    } else if (cityName.textContent === '') {
+      cityName.textContent = 'London';
     }
     searchBar.value = '';
 

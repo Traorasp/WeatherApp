@@ -1,12 +1,7 @@
 import changeDOM from './changeDOM';
 
-const weatherAPI = () => {
-  const retrieveData = async () => {
-    let location = document.querySelector('input').value;
-    if (location === '') {
-      location = document.querySelector('.city').textContent;
-    }
-
+const weatherAPI = (() => {
+  const retrieveData = async (location) => {
     const url = `http://api.openweathermap.org/data/2.5/weather?q=${location}&APPID=2057e59161ea687b444b683c4710b74e`;
     const data = await fetch(url, { mode: 'cors' });
     const weather = await data.json();
@@ -19,15 +14,25 @@ const weatherAPI = () => {
     changeDOM.update(await forecast.json());
   };
 
+  const getLocation = () => {
+    let location = document.querySelector('input').value;
+    if (location === '') {
+      location = document.querySelector('.city').textContent;
+    }
+    retrieveData(location);
+  };
+
+  const initialLoad = () => {
+    retrieveData('london');
+  };
+
+  initialLoad();
+
   const inputBar = document.querySelector('input');
-  inputBar.addEventListener('change', retrieveData);
+  inputBar.addEventListener('change', getLocation);
 
   const unitSelector = document.querySelector('.units');
-  unitSelector.addEventListener('change', retrieveData);
-
-  return {
-
-  };
-};
+  unitSelector.addEventListener('change', getLocation);
+})();
 
 export default weatherAPI;
